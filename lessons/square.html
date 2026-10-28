@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kuasa Dua 平方</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header>
+  <h1>Kuasa Dua · 平方</h1>
+  <p>Mathematics · 数学 · Matematik</p>
+  <a class="button secondary" href="../subjects/math.html">
+    ← 返回数学目录
+  </a>
+</header>
+
+<main>
+  <section class="card">
+    <label for="language">解释语言 Language / Bahasa：</label>
+    <select id="language">
+      <option value="zh">中文</option>
+      <option value="en">English</option>
+      <option value="ms">Bahasa Melayu</option>
+    </select>
+
+    <h2 id="lessonTitle"></h2>
+    <p id="lessonText"></p>
+    <div class="formula" id="formula"></div>
+    <p id="example"></p>
+  </section>
+
+  <section class="card">
+    <h2>小测验 Mini Quiz / Kuiz</h2>
+    <p class="note">完成所有题目后提交，查看分数和解释。</p>
+
+    <form id="quizForm">
+      <div id="questions"></div>
+      <button type="submit">提交答案 Submit / Hantar</button>
+    </form>
+
+    <div class="card" id="result" hidden aria-live="polite"></div>
+  </section>
+</main>
+
+<script src="../assets/js/progress.js"></script>
+<script>
+  const lessonContent = {
+    zh: {
+      title: "什么是平方？",
+      text: "一个数的平方，就是这个数乘以它自己。",
+      formula: "a² = a × a",
+      example: "例子：5² = 5 × 5 = 25"
+    },
+    en: {
+      title: "What is a square?",
+      text: "The square of a number is the number multiplied by itself.",
+      formula: "a² = a × a",
+      example: "Example: 5² = 5 × 5 = 25"
+    },
+    ms: {
+      title: "Apakah itu kuasa dua?",
+      text: "Kuasa dua sesuatu nombor ialah nombor itu didarab dengan dirinya sendiri.",
+      formula: "a² = a × a",
+      example: "Contoh: 5² = 5 × 5 = 25"
+    }
+  };
+
+  const questions = [
+    {
+      q: "1. 3² = ?",
+      options: ["6", "9", "12", "3"],
+      answer: 1,
+      why: "3 × 3 = 9。"
+    },
+    {
+      q: "2. 5² = ?",
+      options: ["10", "20", "25", "15"],
+      answer: 2,
+      why: "5 × 5 = 25。"
+    },
+    {
+      q: "3. 7² = ?",
+      options: ["14", "42", "49", "77"],
+      answer: 2,
+      why: "7 × 7 = 49。"
+    }
+  ];
+
+  const languageSelect = document.getElementById("language");
+
+  function renderLesson() {
+    const content = lessonContent[languageSelect.value];
+
+    document.getElementById("lessonTitle").textContent =
+      content.title;
+
+    document.getElementById("lessonText").textContent =
+      content.text;
+
+    document.getElementById("formula").textContent =
+      content.formula;
+
+    document.getElementById("example").textContent =
+      content.example;
+  }
+
+  function renderQuestions() {
+    const container = document.getElementById("questions");
+
+    questions.forEach((question, index) => {
+      const section = document.createElement("section");
+      section.className = "question";
+
+      const title = document.createElement("h3");
+      title.textContent = question.q;
+      section.appendChild(title);
+
+      question.options.forEach((option, optionIndex) => {
+        const label = document.createElement("label");
+        label.style.display = "block";
+
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "q" + index;
+        input.value = optionIndex;
+        input.required = true;
+
+        label.appendChild(input);
+        label.append(" " + option);
+        section.appendChild(label);
+      });
+
+      container.appendChild(section);
+    });
+  }
+
+  document.getElementById("quizForm")
+    .addEventListener("submit", event => {
+      event.preventDefault();
+
+      const form = new FormData(event.target);
+      let score = 0;
+
+      questions.forEach((question, index) => {
+        if (Number(form.get("q" + index)) === question.answer) {
+          score++;
+        }
+      });
+
+      const result = document.getElementById("result");
+      result.hidden = false;
+
+      result.textContent =
+        `成绩：${score}/${questions.length}`;
+
+      LearningProgress.save(
+        "Kuasa Dua - Squares",
+        score,
+        questions.length
+      );
+    });
+
+  languageSelect.addEventListener("change", renderLesson);
+
+  renderLesson();
+  renderQuestions();
+</script>
+
+</body>
+</html>
