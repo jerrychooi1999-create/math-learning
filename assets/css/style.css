@@ -1,33 +1,47 @@
+
+:root {
+  --primary: #2357c6;
+  --primary-dark: #19439b;
+  --background: #f4f7fc;
+  --surface: #ffffff;
+  --text: #172033;
+  --muted: #59677f;
+  --border: #dce4f0;
+  --success: #e1f7e9;
+  --danger: #ffebeb;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fc;
-  color: #172033;
-  line-height: 1.6;
+  background: var(--background);
+  color: var(--text);
+  font-family: Arial, "Noto Sans", sans-serif;
+  line-height: 1.65;
 }
 
-header {
-  background: #2357c6;
+a {
+  color: var(--primary);
+}
+
+.hero {
+  padding: 48px 20px;
   color: white;
-  padding: 28px 20px;
+  background: linear-gradient(135deg, #2357c6, #173879);
+  text-align: center;
 }
 
-header, main, footer {
-  padding-left: max(20px, calc((100% - 960px) / 2));
-  padding-right: max(20px, calc((100% - 960px) / 2));
+.hero h1 {
+  margin: 8px 0;
+  font-size: clamp(2rem, 6vw, 3.4rem);
 }
 
-main {
-  padding-top: 24px;
-  padding-bottom: 48px;
-}
-
-h1, h2, h3 {
-  line-height: 1.25;
+.container {
+  width: min(100% - 32px, 1000px);
+  margin: 28px auto 50px;
 }
 
 .grid {
@@ -37,85 +51,163 @@ h1, h2, h3 {
 }
 
 .card {
-  background: white;
-  border: 1px solid #e0e7f2;
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 16px;
+  margin: 16px 0;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: 0 5px 20px rgba(30, 55, 90, .04);
 }
 
-button, .button {
+.card h2,
+.card h3 {
+  margin-top: 0;
+}
+
+.button {
   display: inline-block;
+  margin: 6px 4px 6px 0;
+  padding: 11px 16px;
   border: 0;
   border-radius: 10px;
-  padding: 11px 16px;
-  background: #2357c6;
+  background: var(--primary);
   color: white;
   font: inherit;
-  font-weight: bold;
+  font-weight: 700;
   text-decoration: none;
   cursor: pointer;
 }
 
-.secondary {
-  background: #e7edf8;
-  color: #172033;
+.button:hover {
+  background: var(--primary-dark);
+}
+
+.button.secondary {
+  background: #e8eef9;
+  color: var(--text);
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #e5edff;
+  color: #214ba3;
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: .92rem;
 }
 
 .formula {
-  padding: 18px;
-  background: #edf3ff;
+  margin: 16px 0;
+  padding: 16px;
   border-radius: 12px;
+  background: #edf3ff;
   text-align: center;
-  font-size: 1.6rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 800;
 }
 
-.note {
-  color: #536078;
+.question {
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+}
+
+.question h3 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.option {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.option.selected {
+  border: 2px solid var(--primary);
+  background: #edf3ff;
+}
+
+.option.correct {
+  border-color: #23824d;
+  background: var(--success);
+}
+
+.option.wrong {
+  border-color: #c23d3d;
+  background: var(--danger);
+}
+
+.feedback {
+  margin-top: 8px;
   font-size: .92rem;
 }
 
 .progress-track {
-  background: #e1e8f3;
-  height: 10px;
-  border-radius: 20px;
+  height: 9px;
+  margin: 14px 0;
   overflow: hidden;
+  border-radius: 10px;
+  background: #e1e7f0;
 }
 
 .progress-fill {
-  height: 100%;
-  background: #2357c6;
   width: 0;
+  height: 100%;
+  background: var(--primary);
+  transition: width .2s;
 }
 
-.question {
-  border-top: 1px solid #e0e7f2;
-  padding: 16px 0;
+.score-box {
+  display: none;
+  margin: 20px 0;
+  padding: 18px;
+  border-radius: 14px;
+  background: #e1f7e9;
 }
 
-.option {
-  margin: 4px;
-  background: #e7edf8;
-  color: #172033;
+.score-box.show {
+  display: block;
 }
 
-.option.selected {
-  outline: 2px solid #2357c6;
+.score-number {
+  font-size: 2rem;
+  font-weight: 800;
 }
 
 footer {
-  padding-top: 20px;
-  padding-bottom: 30px;
-  color: #536078;
+  padding: 25px 16px;
+  color: var(--muted);
+  text-align: center;
 }
 
 @media (max-width: 650px) {
-  .grid {
+  .grid,
+  .options {
     grid-template-columns: 1fr;
   }
 
   .card {
-    padding: 16px;
+    padding: 17px;
+  }
+
+  .hero {
+    padding: 36px 18px;
   }
 }
