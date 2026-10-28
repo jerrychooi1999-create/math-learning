@@ -1,94 +1,51 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>数学课程目录</title>
+  <title>数学课程目录 | My Learning Hub</title>
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+  <header class="hero">
+    <h1>数学课程目录</h1>
+    <p>Mathematics · Matematik</p>
+    <p>先理解概念，再练习，最后检查成绩。</p>
+  </header>
 
-<header>
-  <h1>数学 Mathematics</h1>
-  <p>Matematik · 按章节学习</p>
-  <a class="button secondary" href="../index.html">
-    ← 返回首页
-  </a>
-</header>
+  <main class="container">
+    <p><a href="../index.html">← 返回学习首页</a></p>
+    <div class="grid">
+      <article class="card">
+        <span class="tag">基础 · BASIC</span>
+        <h2>平方 Squares</h2>
+        <p>认识指数2、平方数和正方形面积。</p>
+        <a class="button" href="../lessons/square.html">开始学习</a>
+      </article>
 
-<main>
-  <section class="card">
-    <h2>选择年级或难度</h2>
+      <article class="card">
+        <span class="tag">基础 · BASIC</span>
+        <h2>乘法 Multiplication</h2>
+        <p>乘法表、乘法规律、多位数计算和生活应用。</p>
+        <a class="button" href="../lessons/multiplication.html">开始学习</a>
+      </article>
 
-    <label for="level">学习级别：</label>
-    <select id="level">
-      <option value="all">全部级别</option>
-      <option value="basic">基础 Basic</option>
-      <option value="intermediate">中级 Intermediate</option>
-      <option value="advanced">进阶 Advanced</option>
-    </select>
-  </section>
+      <article class="card">
+        <span class="tag">基础 · BASIC</span>
+        <h2>除法 Division</h2>
+        <p>平均分配、商、余数与应用题。</p>
+        <a class="button" href="../lessons/division.html">开始学习</a>
+      </article>
+    </div>
 
-  <section class="grid" id="courseList">
-    <article class="card" data-level="basic">
-      <h3>乘法 Multiplication</h3>
-      <p>乘法表、心算与应用题。</p>
-      <p class="note">级别：基础 Basic</p>
-      <a class="button" href="../lessons/multiplication.html">
-        开始学习
-      </a>
-    </article>
+    <section class="card">
+      <h2>接下来的课程规划</h2>
+      <p>加法 → 减法 → 乘法 → 除法 → 分数 → 小数 → 百分比 → 比率 → 代数 → 几何 → 统计与概率。</p>
+      <p class="muted">数学难度将参考新加坡课程进阶；每个年级的正式内容仍需逐项核对相应课程大纲。</p>
+    </section>
+  </main>
 
-    <article class="card" data-level="basic">
-      <h3>除法 Division</h3>
-      <p>平均分配、余数与应用题。</p>
-      <p class="note">级别：基础 Basic</p>
-      <a class="button" href="../lessons/division.html">
-        开始学习
-      </a>
-    </article>
-
-    <article class="card" data-level="basic">
-      <h3>Kuasa Dua 平方</h3>
-      <p>学习一个数乘以自己。</p>
-      <p class="note">级别：基础 Basic</p>
-      <a class="button" href="../lessons/square.html">
-        开始学习
-      </a>
-    </article>
-
-    <article class="card" data-level="basic">
-      <h3>Punca Kuasa Dua 平方根</h3>
-      <p>从平方数反向找出平方根。</p>
-      <p class="note">级别：基础 Basic</p>
-      <a class="button" href="../lessons/square-root.html">
-        开始学习
-      </a>
-    </article>
-
-    <article class="card" data-level="intermediate">
-      <h3>分数 Fractions</h3>
-      <p>认识分子、分母和分数运算。</p>
-      <p class="note">级别：中级 Intermediate</p>
-      <a class="button" href="../lessons/fractions.html">
-        开始学习
-      </a>
-    </article>
-  </section>
-</main>
-
-<script>
-  const level = document.getElementById("level");
-
-  level.addEventListener("change", () => {
-    document.querySelectorAll("#courseList [data-level]")
-      .forEach(card => {
-        card.hidden =
-          level.value !== "all" &&
-          card.dataset.level !== level.value;
-      });
-  });
-</script>
-
+  <footer>My Learning Hub</footer>
 </body>
 </html>
