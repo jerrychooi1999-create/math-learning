@@ -1,78 +1,58 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>我的学习空间</title>
+  <title>我的学习空间 | My Learning Hub</title>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <header class="hero">
+    <p>MY LEARNING HUB · RUANG PEMBELAJARAN</p>
+    <h1>我的学习空间</h1>
+    <p>Learn step by step. Belajar sedikit demi sedikit.</p>
+    <p>按自己的进度学习，完成练习，并查看自己的成绩。</p>
+    <a class="button" href="subjects/math.html">开始学习数学 Start Mathematics</a>
+  </header>
 
-<header>
-  <h1>我的学习空间</h1>
-  <p>My Learning Hub · Ruang Pembelajaran Saya</p>
-  <p>选择科目，循序渐进地学习。</p>
-</header>
-
-<main>
-  <section class="card">
-    <h2>选择科目 Choose a Subject</h2>
-
+  <main class="container">
+    <h2>选择学习科目 Choose a Subject</h2>
     <div class="grid">
       <article class="card">
         <h3>数学 Mathematics</h3>
-        <p>乘法、除法、平方、平方根和分数。</p>
-        <a class="button" href="subjects/math.html">
-          进入数学
-        </a>
+        <p>平方、乘法、除法，以及未来的分数、小数和百分比。</p>
+        <a class="button" href="subjects/math.html">进入数学课程</a>
       </article>
-
       <article class="card">
         <h3>英语 English</h3>
-        <p>词汇、语法、拼写和阅读理解。</p>
-        <a class="button" href="subjects/english.html">
-          进入英语
-        </a>
+        <p>词汇、语法、拼写与阅读理解。课程将逐步加入。</p>
+        <span class="tag">即将推出 · Coming soon</span>
       </article>
-
       <article class="card">
         <h3>马来语 Bahasa Melayu</h3>
-        <p>Kosa kata、Tatabahasa 和 Pemahaman。</p>
-        <a class="button" href="subjects/malay.html">
-          进入马来语
-        </a>
+        <p>Kosa kata, tatabahasa dan pemahaman.</p>
+        <span class="tag">即将推出 · Akan datang</span>
       </article>
-
       <article class="card">
-        <h3>其他课程 Other Subjects</h3>
-        <p>未来可以增加科学、历史等课程。</p>
+        <h3>历史与地理 History & Geography</h3>
+        <p>未来将逐步加入马来西亚与新加坡相关学习内容。</p>
+        <span class="tag">课程规划中</span>
       </article>
     </div>
-  </section>
 
-  <section class="card">
-    <h2>学习进度 Learning Progress</h2>
-    <p>已完成测验：<strong id="attempts">0</strong> 次</p>
-    <p>最近成绩：<strong id="latest">尚无记录</strong></p>
-  </section>
-</main>
+    <section class="card">
+      <h2>我的学习记录 My Progress</h2>
+      <p>已完成测验：<strong id="attemptCount">0</strong> 次</p>
+      <p>最近成绩：<strong id="latestScore">暂无记录</strong></p>
+      <button class="button secondary" id="clearProgress" type="button">
+        清除本机学习记录
+      </button>
+      <p class="muted">成绩保存在当前浏览器，不会自动同步到其他设备。</p>
+    </section>
+  </main>
 
-<footer>
-  My Learning Hub · 学习一点，进步一点。
-</footer>
-
-<script src="assets/js/progress.js"></script>
-<script>
-  const summary = LearningProgress.getSummary();
-
-  document.getElementById("attempts").textContent =
-    summary.attempts;
-
-  document.getElementById("latest").textContent =
-    summary.latest
-      ? `${summary.latest.course}：${summary.latest.score}/${summary.latest.total}`
-      : "尚无记录";
-</script>
-
+  <footer>My Learning Hub · 持续学习，每天进步。</footer>
+  <script src="assets/js/progress.js"></script>
 </body>
 </html>
