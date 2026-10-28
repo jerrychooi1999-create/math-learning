@@ -1,86 +1,718 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>乘法 Multiplication</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>乘法课程 | Multiplication</title>
+<style>
+:root {
+  --blue: #2357c6;
+  --blue-light: #edf3ff;
+  --green: #16845b;
+  --red: #c43d48;
+  --bg: #f4f7fc;
+  --card: #ffffff;
+  --text: #172033;
+  --muted: #637089;
+  --border: #dfe6f1;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.7;
+}
+header {
+  background: linear-gradient(135deg, #173b91, #3675e9);
+  color: white;
+  padding: 34px 20px;
+}
+.header-inner, main, footer {
+  max-width: 960px;
+  margin: auto;
+}
+.eyebrow {
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  opacity: .85;
+}
+h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 8px 0; line-height: 1.2; }
+header p { max-width: 700px; margin-bottom: 0; }
+main { padding: 22px 15px 50px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 18px;
+  box-shadow: 0 5px 18px #19305508;
+}
+h2 { margin-top: 0; font-size: 1.5rem; line-height: 1.35; }
+h3 { line-height: 1.4; }
+.tag {
+  display: inline-block;
+  background: #e3edff;
+  color: #204da6;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: .78rem;
+  font-weight: 800;
+  margin-bottom: 9px;
+}
+.muted { color: var(--muted); font-size: .94rem; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.formula {
+  text-align: center;
+  padding: 17px 10px;
+  margin: 14px 0;
+  border-radius: 14px;
+  background: var(--blue-light);
+  color: #173b91;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 850;
+}
+.example {
+  padding: 13px 15px;
+  margin: 12px 0;
+  border-left: 4px solid var(--blue);
+  background: #f6f8fd;
+  border-radius: 0 12px 12px 0;
+}
+.step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 13px 0;
+}
+.step-num {
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: white;
+  font-weight: 800;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+}
+.primary, .secondary {
+  border: 0;
+  border-radius: 11px;
+  padding: 11px 16px;
+  font-weight: 800;
+}
+.primary { background: var(--blue); color: white; }
+.secondary { background: #e8edf6; color: #172033; }
+.primary:disabled { opacity: .5; cursor: not-allowed; }
+.toolbar {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid var(--border); padding: 10px; text-align: center; }
+th { background: var(--blue-light); }
+td button {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: white;
+  padding: 8px;
+  border-radius: 8px;
+}
+td button:hover { background: var(--blue-light); }
+.visual-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 15px 0;
+}
+.group {
+  min-width: 90px;
+  padding: 10px;
+  border: 2px solid #a9c3f8;
+  border-radius: 12px;
+  background: #f7faff;
+  text-align: center;
+}
+.dots {
+  display: grid;
+  grid-template-columns: repeat(4, 17px);
+  justify-content: center;
+  gap: 5px;
+  margin: 8px auto;
+}
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #3675e9;
+}
+.progress {
+  height: 9px;
+  background: #e3e9f3;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 14px 0 20px;
+}
+.progress div {
+  height: 100%;
+  width: 0;
+  background: var(--blue);
+  transition: width .2s;
+}
+.question {
+  padding: 17px 0;
+  border-top: 1px solid var(--border);
+}
+.question:first-child { border-top: 0; }
+.question h3 { margin: 0 0 11px; font-size: 1.02rem; }
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+.option {
+  text-align: left;
+  padding: 11px;
+  border: 1px solid #d6dfed;
+  border-radius: 11px;
+  background: white;
+  color: var(--text);
+}
+.option.selected { border: 2px solid var(--blue); background: var(--blue-light); }
+.option.correct { border-color: var(--green); background: #e6f7ef; }
+.option.wrong { border-color: var(--red); background: #fff0f0; }
+.feedback { font-size: .92rem; font-weight: 650; margin-top: 9px; }
+.score {
+  display: none;
+  background: #e4f6ec;
+  color: #14563d;
+  border-radius: 14px;
+  padding: 18px;
+  margin: 18px 0;
+}
+.score.show { display: block; }
+.score strong { font-size: 2rem; }
+footer { padding: 0 16px 30px; color: var(--muted); font-size: .85rem; }
+@media(max-width:620px) {
+  .grid, .options { grid-template-columns: 1fr; }
+  .card { padding: 17px; }
+}
+</style>
 </head>
 <body>
-<header class="hero">
-  <h1>乘法 Multiplication</h1>
-  <p>Pendaraban · 从乘法表到生活应用</p>
+<header>
+  <div class="header-inner">
+    <div class="eyebrow">MATHEMATICS · MULTIPLICATION · PENDARABAN</div>
+    <h1>乘法 Multiplication</h1>
+    <p>从理解乘法的意思开始，逐步学习乘法表、心算技巧、两位数计算和生活应用。</p>
+  </div>
 </header>
-<main class="container">
-  <p><a href="../subjects/math.html">← 返回数学课程</a></p>
-  <article class="card">
-    <h2>什么是乘法？</h2>
-    <p>乘法是把相同数量的组加起来。 English: Multiplication is repeated addition. Bahasa Melayu: Pendaraban ialah penambahan berulang.</p>
+
+<main>
+  <div class="toolbar">
+    <button class="secondary" onclick="location.href='../index.html'">← 返回学习首页</button>
+    <button class="secondary" onclick="document.getElementById('test').scrollIntoView({behavior:'smooth'})">直接做40题测验 ↓</button>
+  </div>
+
+  <section class="card">
+    <span class="tag">LESSON 1 · 基础概念</span>
+    <h2>一、什么是乘法？</h2>
+    <p>乘法是把相同数量的组加起来的一种快捷方法。</p>
+    <p class="muted">English: Multiplication is a quick way to add equal groups.</p>
+    <p class="muted">Bahasa Melayu: Pendaraban ialah cara ringkas untuk menambah kumpulan yang sama banyak.</p>
+
     <div class="formula">3 × 4 = 4 + 4 + 4 = 12</div>
-    <p>这代表3组，每组4个，总数是12。</p>
-    <h3>重要规律</h3>
+    <p>这个算式表示 <b>3组，每组4个</b>，一共有12个。</p>
+    <div class="visual-groups" id="groupDemo">
+      <div class="group"><b>第1组</b><div class="dots"><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div></div>
+      <div class="group"><b>第2组</b><div class="dots"><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div></div>
+      <div class="group"><b>第3组</b><div class="dots"><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div></div>
+    </div>
+    <div class="example">
+      <b>认识乘法算式：</b><br>
+      3 × 4 = 12<br>
+      3：组数（有几组）<br>
+      4：每组的数量<br>
+      12：乘积，也就是计算结果
+    </div>
+    <h3>试试看：改变组数</h3>
+    <p class="muted">选择组数，看看每组4个时，总数如何变化。</p>
+    <div class="toolbar" id="groupButtons">
+      <button class="secondary" data-groups="2">2组</button>
+      <button class="secondary" data-groups="3">3组</button>
+      <button class="secondary" data-groups="4">4组</button>
+      <button class="secondary" data-groups="5">5组</button>
+    </div>
+    <div id="groupResult" class="formula" aria-live="polite">3 × 4 = 12</div>
+  </section>
+
+  <section class="card">
+    <span class="tag">LESSON 2 · 乘法规律</span>
+    <h2>二、四个重要规律</h2>
+    <div class="example">
+      <b>1. 交换律</b><br>
+      3 × 5 = 5 × 3 = 15<br>
+      交换两个数字的位置，乘积不会改变。
+    </div>
+    <div class="example">
+      <b>2. 乘以1</b><br>
+      9 × 1 = 9<br>
+      任何数乘以1，结果还是这个数。
+    </div>
+    <div class="example">
+      <b>3. 乘以0</b><br>
+      9 × 0 = 0<br>
+      任何数乘以0，结果都是0。
+    </div>
+    <div class="example">
+      <b>4. 乘以10</b><br>
+      7 × 10 = 70<br>
+      可以理解为7个十，也就是70。
+    </div>
+    <p><b>记忆方法：</b> 乘法可以交换位置；乘1不变；乘0得0；乘10要注意数位。</p>
+  </section>
+
+  <section class="card">
+    <span class="tag">LESSON 3 · 乘法表</span>
+    <h2>三、练习乘法表</h2>
+    <p>点击表格中的算式，练习常见乘法。建议先熟悉2、3、4、5和10的乘法表，再练习6到9。</p>
+    <div class="table-wrap">
+      <table id="timesTable">
+        <thead><tr><th>×</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="formula" id="tableAnswer" aria-live="polite">点击任意算式查看答案</div>
+  </section>
+
+  <section class="card">
+    <span class="tag">LESSON 4 · 心算技巧</span>
+    <h2>四、把大数字拆开计算</h2>
+    <p>不一定要死记所有答案。你可以把一个数字拆成更容易计算的部分。</p>
+    <div class="example">
+      <b>例题1：12 × 4</b><br>
+      12 = 10 + 2<br>
+      12 × 4 = 10 × 4 + 2 × 4<br>
+      = 40 + 8<br>
+      <b>= 48</b>
+    </div>
+    <div class="example">
+      <b>例题2：23 × 3</b><br>
+      23 = 20 + 3<br>
+      23 × 3 = 20 × 3 + 3 × 3<br>
+      = 60 + 9<br>
+      <b>= 69</b>
+    </div>
+    <div class="example">
+      <b>例题3：25 × 8</b><br>
+      25 × 4 = 100<br>
+      25 × 8 = 100 × 2<br>
+      <b>= 200</b>
+    </div>
+    <p class="muted">技巧：拆分数字时，每一部分都要乘以相同的另一个数字，最后再把结果相加。</p>
+  </section>
+
+  <section class="card">
+    <span class="tag">LESSON 5 · 文字题</span>
+    <h2>五、生活中的乘法</h2>
+    <div class="example">
+      <b>例题1：买文具</b><br>
+      一盒铅笔有12支，买4盒有多少支？<br>
+      算式：12 × 4 = 48<br>
+      答案：48支铅笔。
+    </div>
+    <div class="example">
+      <b>例题2：计算价格</b><br>
+      一张票RM8，买6张需要多少钱？<br>
+      算式：8 × 6 = 48<br>
+      答案：RM48。
+    </div>
+    <div class="example">
+      <b>例题3：座位排列</b><br>
+      礼堂有7排座位，每排18个座位。一共有多少个？<br>
+      算式：18 × 7 = 126<br>
+      答案：126个座位。
+    </div>
+    <div class="example">
+      <b>例题4：长方形面积</b><br>
+      长方形长12 cm，宽9 cm。面积是多少？<br>
+      面积 = 长 × 宽 = 12 × 9 = 108 cm²。
+    </div>
+    <h3>如何判断是否使用乘法？</h3>
     <ul>
-      <li>交换律：3 × 5 = 5 × 3 = 15。</li>
-      <li>任何数乘以1，结果不变。</li>
-      <li>任何数乘以0，结果是0。</li>
-      <li>12 × 5 = 10 × 5 + 2 × 5 = 60。</li>
+      <li>题目出现相同数量的多组物品。</li>
+      <li>每组数量相同，要求全部加起来。</li>
+      <li>商品单价相同，要求计算多件商品的总价。</li>
+      <li>要求长方形面积，已知长度和宽度。</li>
     </ul>
-    <h3>生活例题</h3>
-    <p>每张票 RM8，买3张：8 × 3 = RM24。</p>
-    <p>长方形面积 = 长 × 宽，例如12 cm × 9 cm = 108 cm²。</p>
-  </article>
-  <article class="card">
-    <h2>40题分级测验</h2>
-    <p class="muted">简单15题、中等10题、稍复杂10题、挑战题5题。每题1分。</p>
-    <div id="quizRoot"></div>
-  </article>
+    <p class="muted">注意：文字题也可能需要加法、减法或除法。请先读清楚问题，再选择运算。</p>
+  </section>
+
+  <section class="card">
+    <span class="tag">QUICK PRACTICE · 即时练习</span>
+    <h2>六、先做5道热身题</h2>
+    <p class="muted">选择答案后立即查看结果。完成热身后，再挑战40题测验。</p>
+    <div id="warmup"></div>
+    <div id="warmupResult" class="example" aria-live="polite">完成5题后，这里会显示热身成绩。</div>
+    <button class="secondary" id="warmupReset">重新练习热身题</button>
+  </section>
+
+  <section class="card" id="test">
+    <span class="tag">FINAL TEST · 40 QUESTIONS</span>
+    <h2>七、乘法40题分级测验</h2>
+    <p>每题1分，共40分。请完成全部题目，再检查答案。提交后会显示成绩、正确答案和每题的解题说明。</p>
+    <div class="grid">
+      <div class="example"><b>简单：15题</b><br>乘法表与基础概念</div>
+      <div class="example"><b>中等：10题</b><br>两位数和常规计算</div>
+      <div class="example"><b>稍复杂：10题</b><br>心算与生活应用</div>
+      <div class="example"><b>挑战：5题</b><br>多步骤推理与综合应用</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:15px">
+      <b id="answered">已作答 0 / 40</b>
+      <span id="currentLevel" class="muted">从简单题开始</span>
+    </div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <div id="questions"></div>
+    <div id="scoreBox" class="score" aria-live="polite">
+      <strong id="scoreValue">0/40</strong>
+      <div id="scoreMessage"></div>
+    </div>
+    <div class="toolbar">
+      <button class="primary" id="checkBtn">检查全部答案</button>
+      <button class="secondary" id="resetBtn">重新作答</button>
+    </div>
+    <p class="muted">学习记录保存在当前浏览器中。若更换设备或清除浏览器数据，记录可能不会同步。</p>
+    <div id="history"></div>
+  </section>
 </main>
-<footer>My Learning Hub</footer>
+
+<footer>My Learning Hub · 学习的目标不是只记住答案，而是理解为什么答案正确。</footer>
+
 <script>
-window.lessonTitle = "乘法 Multiplication";
-window.lessonQuiz = [
-["简单","2 × 3 = ?",["5","6","8","9"],1,"2组，每组3个，共6个。"],
-["简单","4 × 2 = ?",["6","8","10","12"],1,"4 × 2 = 8。"],
-["简单","5 × 5 = ?",["10","20","25","30"],2,"5 × 5 = 25。"],
-["简单","3 × 4 = ?",["7","12","14","16"],1,"3 × 4 = 12。"],
-["简单","6 × 2 = ?",["8","10","12","14"],2,"6 × 2 = 12。"],
-["简单","7 × 3 = ?",["10","18","21","24"],2,"7 + 7 + 7 = 21。"],
-["简单","8 × 2 = ?",["12","14","16","18"],2,"8 × 2 = 16。"],
-["简单","9 × 2 = ?",["11","16","18","20"],2,"9 × 2 = 18。"],
-["简单","10 × 4 = ?",["14","40","400","10"],1,"10 × 4 = 40。"],
-["简单","6 × 5 = ?",["11","25","30","35"],2,"6 × 5 = 30。"],
-["简单","1 × 9 = ?",["0","1","9","10"],2,"乘以1，结果仍然是9。"],
-["简单","7 × 0 = ?",["0","1","7","70"],0,"乘以0，结果是0。"],
-["简单","4 × 6 = ?",["20","22","24","26"],2,"4 × 6 = 24。"],
-["简单","3 × 8 = ?",["11","21","24","32"],2,"3 × 8 = 24。"],
-["简单","5 × 10 = ?",["15","50","100","500"],1,"5 × 10 = 50。"],
-["中等","12 × 3 = ?",["15","24","36","39"],2,"12 + 12 + 12 = 36。"],
-["中等","11 × 4 = ?",["15","40","44","48"],2,"11 × 4 = 44。"],
-["中等","9 × 7 = ?",["56","63","72","79"],1,"9 × 7 = 63。"],
-["中等","8 × 8 = ?",["16","48","64","72"],2,"8 × 8 = 64。"],
-["中等","14 × 2 = ?",["16","24","28","32"],2,"14 + 14 = 28。"],
-["中等","6 × 9 = ?",["45","54","56","63"],1,"6 × 9 = 54。"],
-["中等","15 × 3 = ?",["18","30","45","60"],2,"15 × 3 = 45。"],
-["中等","20 × 4 = ?",["24","60","80","800"],2,"20 × 4 = 80。"],
-["中等","13 × 5 = ?",["55","60","65","75"],2,"50 + 15 = 65。"],
-["中等","7 × 12 = ?",["72","74","84","96"],2,"70 + 14 = 84。"],
-["稍复杂","24 × 3 = ?",["62","68","72","82"],2,"60 + 12 = 72。"],
-["稍复杂","16 × 5 = ?",["65","70","80","85"],2,"16 × 5 = 8 × 10 = 80。"],
-["稍复杂","32 × 4 = ?",["108","118","128","138"],2,"120 + 8 = 128。"],
-["稍复杂","18 × 6 = ?",["98","108","118","128"],1,"20 × 6 − 2 × 6 = 108。"],
-["稍复杂","25 × 8 = ?",["100","150","200","250"],2,"25 × 4 = 100，所以乘8是200。"],
-["稍复杂","12 × 12 = ?",["124","132","144","154"],2,"12 × 12 = 144。"],
-["稍复杂","35 × 2 = ?",["60","65","70","75"],2,"35 + 35 = 70。"],
-["稍复杂","4盒铅笔，每盒12支，共有多少支？",["16","36","48","60"],2,"4 × 12 = 48支。"],
-["稍复杂","每张票RM8，买6张多少钱？",["RM14","RM42","RM48","RM56"],2,"8 × 6 = RM48。"],
-["稍复杂","17 × 3 = ?",["41","48","51","57"],2,"30 + 21 = 51。"],
-["挑战","18个座位一排，共7排，有多少座位？",["116","126","136","146"],1,"18 × 7 = 126。"],
-["挑战","24名学生每人有15张卡片，共多少张？",["260","340","360","380"],2,"24 × 15 = 240 + 120 = 360。"],
-["挑战","长12 cm、宽9 cm的长方形面积是多少？",["21 cm²","42 cm²","108 cm²","118 cm²"],2,"12 × 9 = 108 cm²。"],
-["挑战","一件商品RM35，买4件，付RM150，找回多少钱？",["RM10","RM15","RM20","RM25"],0,"35 × 4 = 140，150 − 140 = RM10。"],
-["挑战","48 × 25 = ?",["1000","1100","1200","1250"],2,"48 × 25 = 48 × 100 ÷ 4 = 1200。"]
+const storageKey = 'myLearningHubProgressV1';
+
+function getRecords() {
+  try {
+    const value = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    return Array.isArray(value) ? value : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveRecord(record) {
+  try {
+    const records = getRecords();
+    records.push(record);
+    localStorage.setItem(storageKey, JSON.stringify(records.slice(-100)));
+  } catch (error) {
+    console.warn('无法保存学习记录。', error);
+  }
+}
+
+function renderHistory() {
+  const records = getRecords().filter(record => record.course === 'Multiplication');
+  const history = document.getElementById('history');
+  if (!records.length) {
+    history.innerHTML = '<p class="muted">目前还没有乘法测验记录。完成第一次测验后，成绩会显示在这里。</p>';
+    return;
+  }
+  history.innerHTML = '<h3>最近测验记录</h3>' +
+    records.slice(-5).reverse().map(record =>
+      '<div class="example"><b>' + escapeHTML(String(record.score)) +
+      '</b> · ' + escapeHTML(String(record.date || '')) + '</div>'
+    ).join('');
+}
+
+function escapeHTML(value) {
+  return value.replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;',
+    '"': '&quot;', "'": '&#39;'
+  })[char]);
+}
+
+// 可互动分组示范
+document.querySelectorAll('[data-groups]').forEach(button => {
+  button.addEventListener('click', () => {
+    const groups = Number(button.dataset.groups);
+    document.getElementById('groupResult').textContent =
+      groups + ' × 4 = ' + Array(groups).fill(4).join(' + ') +
+      ' = ' + (groups * 4);
+  });
+});
+
+// 乘法表
+const tableBody = document.querySelector('#timesTable tbody');
+for (let row = 1; row <= 10; row++) {
+  const tr = document.createElement('tr');
+  const heading = document.createElement('th');
+  heading.textContent = row;
+  tr.appendChild(heading);
+  for (let col = 1; col <= 10; col++) {
+    const td = document.createElement('td');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = row + '×' + col;
+    button.addEventListener('click', () => {
+      document.getElementById('tableAnswer').textContent =
+        row + ' × ' + col + ' = ' + (row * col);
+    });
+    td.appendChild(button);
+    tr.appendChild(td);
+  }
+  tableBody.appendChild(tr);
+}
+
+// 5道热身题
+const warmupQuestions = [
+  { q: '3 × 4 = ?', options: ['7','12','14','16'], answer: 1, why: '3 × 4 = 4 + 4 + 4 = 12。' },
+  { q: '8 × 0 = ?', options: ['0','1','8','80'], answer: 0, why: '任何数乘以0，结果都是0。' },
+  { q: '7 × 5 = ?', options: ['30','35','40','45'], answer: 1, why: '7 × 5 = 35。' },
+  { q: '12 × 3 = ?', options: ['15','24','36','42'], answer: 2, why: '12 + 12 + 12 = 36。' },
+  { q: '每袋有6个苹果，4袋共有多少个？', options: ['10','18','24','30'], answer: 2, why: '4袋，每袋6个：4 × 6 = 24。' }
 ];
+let warmupAnswers = {};
+let warmupChecked = false;
+function renderWarmup() {
+  const root = document.getElementById('warmup');
+  root.innerHTML = '';
+  warmupQuestions.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'question';
+    const title = document.createElement('h3');
+    title.textContent = (i + 1) + '. ' + item.q;
+    box.appendChild(title);
+    const options = document.createElement('div');
+    options.className = 'options';
+    item.options.forEach((option, j) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'option';
+      button.textContent = String.fromCharCode(65 + j) + '. ' + option;
+      if (warmupAnswers[i] === j) button.classList.add('selected');
+      if (warmupChecked && j === item.answer) button.classList.add('correct');
+      if (warmupChecked && warmupAnswers[i] === j && j !== item.answer) button.classList.add('wrong');
+      button.addEventListener('click', () => {
+        if (warmupChecked) return;
+        warmupAnswers[i] = j;
+        renderWarmup();
+      });
+      options.appendChild(button);
+    });
+    box.appendChild(options);
+    if (warmupChecked) {
+      const feedback = document.createElement('div');
+      feedback.className = 'feedback';
+      feedback.textContent =
+        (warmupAnswers[i] === item.answer ? '✓ 答对了！ ' : '✗ 正确答案：' + item.options[item.answer] + '。 ') + item.why;
+      box.appendChild(feedback);
+    }
+    root.appendChild(box);
+  });
+  if (warmupChecked) {
+    const score = warmupQuestions.filter((item, i) => warmupAnswers[i] === item.answer).length;
+    document.getElementById('warmupResult').textContent = '热身成绩：' + score + '/5。' +
+      (score === 5 ? '全部答对，太棒了！' : '看一看每题的解释，再试一次。');
+  }
+}
+document.getElementById('warmupReset').addEventListener('click', () => {
+  warmupAnswers = {};
+  warmupChecked = false;
+  document.getElementById('warmupResult').textContent = '完成5题后，这里会显示热身成绩。';
+  renderWarmup();
+});
+renderWarmup();
+// 显示热身提交按钮
+const warmupSubmit = document.createElement('button');
+warmupSubmit.type = 'button';
+warmupSubmit.className = 'primary';
+warmupSubmit.textContent = '检查热身答案';
+warmupSubmit.style.margin = '10px 0 15px';
+warmupSubmit.addEventListener('click', () => {
+  if (Object.keys(warmupAnswers).length !== warmupQuestions.length) {
+    document.getElementById('warmupResult').textContent = '请先回答全部5题。';
+    return;
+  }
+  warmupChecked = true;
+  renderWarmup();
+});
+document.getElementById('warmup').after(warmupSubmit);
+
+// 40题题库：简单15、中等10、稍复杂10、挑战5
+const questions = [
+  // 简单 1-15
+  {level:'简单',q:'1. 2 × 3 = ?',options:['5','6','8','9'],answer:1,why:'2组，每组3个：3 + 3 = 6。'},
+  {level:'简单',q:'2. 4 × 2 = ?',options:['6','8','10','12'],answer:1,why:'4 × 2 = 2 + 2 + 2 + 2 = 8。'},
+  {level:'简单',q:'3. 5 × 5 = ?',options:['10','20','25','30'],answer:2,why:'5 × 5 = 25。'},
+  {level:'简单',q:'4. 3 × 4 = ?',options:['7','12','14','16'],answer:1,why:'3 × 4 = 12。'},
+  {level:'简单',q:'5. 6 × 2 = ?',options:['8','10','12','14'],answer:2,why:'6 × 2 = 12。'},
+  {level:'简单',q:'6. 7 × 3 = ?',options:['10','18','21','24'],answer:2,why:'7 + 7 + 7 = 21。'},
+  {level:'简单',q:'7. 8 × 2 = ?',options:['12','14','16','18'],answer:2,why:'8 × 2 = 16。'},
+  {level:'简单',q:'8. 9 × 2 = ?',options:['11','16','18','20'],answer:2,why:'9 × 2 = 18。'},
+  {level:'简单',q:'9. 10 × 4 = ?',options:['14','40','400','10'],answer:1,why:'10 × 4 = 40。'},
+  {level:'简单',q:'10. 6 × 5 = ?',options:['11','25','30','35'],answer:2,why:'6 × 5 = 30。'},
+  {level:'简单',q:'11. 1 × 9 = ?',options:['0','1','9','10'],answer:2,why:'任何数乘以1，结果是这个数本身。'},
+  {level:'简单',q:'12. 7 × 0 = ?',options:['0','1','7','70'],answer:0,why:'任何数乘以0，结果都是0。'},
+  {level:'简单',q:'13. 4 × 6 = ?',options:['20','22','24','26'],answer:2,why:'4 × 6 = 24。'},
+  {level:'简单',q:'14. 3 × 8 = ?',options:['11','21','24','32'],answer:2,why:'3 × 8 = 24。'},
+  {level:'简单',q:'15. 5 × 10 = ?',options:['15','50','100','500'],answer:1,why:'5 × 10 = 50。'},
+
+  // 中等 16-25
+  {level:'中等',q:'16. 12 × 3 = ?',options:['15','24','36','39'],answer:2,why:'12 + 12 + 12 = 36。'},
+  {level:'中等',q:'17. 11 × 4 = ?',options:['15','40','44','48'],answer:2,why:'11 × 4 = 44。'},
+  {level:'中等',q:'18. 9 × 7 = ?',options:['56','63','72','79'],answer:1,why:'9 × 7 = 63。'},
+  {level:'中等',q:'19. 8 × 8 = ?',options:['16','48','64','72'],answer:2,why:'8 × 8 = 64。'},
+  {level:'中等',q:'20. 14 × 2 = ?',options:['16','24','28','32'],answer:2,why:'14 + 14 = 28。'},
+  {level:'中等',q:'21. 6 × 9 = ?',options:['45','54','56','63'],answer:1,why:'6 × 9 = 54。'},
+  {level:'中等',q:'22. 15 × 3 = ?',options:['18','30','45','60'],answer:2,why:'15 + 15 + 15 = 45。'},
+  {level:'中等',q:'23. 20 × 4 = ?',options:['24','60','80','800'],answer:2,why:'2个十乘以4是8个十，即80。'},
+  {level:'中等',q:'24. 13 × 5 = ?',options:['55','60','65','75'],answer:2,why:'10 × 5 + 3 × 5 = 50 + 15 = 65。'},
+  {level:'中等',q:'25. 7 × 12 = ?',options:['72','74','84','96'],answer:2,why:'7 × 12 = 7 × (10 + 2) = 70 + 14 = 84。'},
+
+  // 稍复杂 26-35
+  {level:'稍复杂',q:'26. 24 × 3 = ?',options:['62','68','72','82'],answer:2,why:'20 × 3 + 4 × 3 = 60 + 12 = 72。'},
+  {level:'稍复杂',q:'27. 16 × 5 = ?',options:['65','70','80','85'],answer:2,why:'16 × 5 = 8 × 10 = 80。'},
+  {level:'稍复杂',q:'28. 32 × 4 = ?',options:['108','118','128','138'],answer:2,why:'30 × 4 + 2 × 4 = 120 + 8 = 128。'},
+  {level:'稍复杂',q:'29. 18 × 6 = ?',options:['98','108','118','128'],answer:1,why:'20 × 6 − 2 × 6 = 120 − 12 = 108。'},
+  {level:'稍复杂',q:'30. 25 × 8 = ?',options:['100','150','200','250'],answer:2,why:'25 × 4 = 100，所以25 × 8 = 200。'},
+  {level:'稍复杂',q:'31. 12 × 12 = ?',options:['124','132','144','154'],answer:2,why:'12 × 12 = 144。'},
+  {level:'稍复杂',q:'32. 35 × 2 = ?',options:['60','65','70','75'],answer:2,why:'35 + 35 = 70。'},
+  {level:'稍复杂',q:'33. 4盒铅笔，每盒有12支，共有多少支？',options:['16','36','48','60'],answer:2,why:'4 × 12 = 48支。'},
+  {level:'稍复杂',q:'34. 每张票RM8，买6张需要多少钱？',options:['RM14','RM42','RM48','RM56'],answer:2,why:'8 × 6 = 48，所以总价是RM48。'},
+  {level:'稍复杂',q:'35. 17 × 3 = ?',options:['41','48','51','57'],answer:2,why:'10 × 3 + 7 × 3 = 30 + 21 = 51。'},
+
+  // 挑战 36-40
+  {level:'挑战',q:'36. 一排有18个座位，共有7排，一共有多少个座位？',options:['116','126','136','146'],answer:1,why:'18 × 7 = 10 × 7 + 8 × 7 = 70 + 56 = 126。'},
+  {level:'挑战',q:'37. 24名学生每人收集15张卡片，总共有多少张？',options:['260','340','360','380'],answer:2,why:'24 × 15 = 24 × (10 + 5) = 240 + 120 = 360。'},
+  {level:'挑战',q:'38. 一个长方形长12 cm，宽9 cm，面积是多少？',options:['21 cm²','42 cm²','108 cm²','118 cm²'],answer:2,why:'长方形面积 = 长 × 宽 = 12 × 9 = 108 cm²。'},
+  {level:'挑战',q:'39. 一件商品RM35，买4件，付RM150，应找回多少钱？',options:['RM10','RM15','RM20','RM25'],answer:0,why:'总价35 × 4 = RM140；找回150 − 140 = RM10。'},
+  {level:'挑战',q:'40. 48 × 25 = ?',options:['1000','1100','1200','1250'],answer:2,why:'48 × 25 = 48 × 100 ÷ 4 = 1200。'}
+];
+
+const answers = {};
+let checked = false;
+const questionsRoot = document.getElementById('questions');
+
+function updateProgress() {
+  const count = Object.keys(answers).length;
+  document.getElementById('answered').textContent = '已作答 ' + count + ' / 40';
+  document.getElementById('progressBar').style.width = (count / 40 * 100) + '%';
+  document.getElementById('currentLevel').textContent =
+    count === 40 ? '已完成全部题目' : '还有 ' + (40 - count) + ' 题';
+}
+
+function renderQuestions() {
+  questionsRoot.innerHTML = '';
+  questions.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'question';
+
+    const title = document.createElement('h3');
+    title.textContent = '[' + item.level + '] ' + item.q;
+    box.appendChild(title);
+
+    const options = document.createElement('div');
+    options.className = 'options';
+
+    item.options.forEach((option, j) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'option';
+      button.textContent = String.fromCharCode(65 + j) + '. ' + option;
+
+      if (answers[i] === j) button.classList.add('selected');
+
+      if (checked && j === item.answer) button.classList.add('correct');
+      if (checked && answers[i] === j && j !== item.answer) button.classList.add('wrong');
+
+      button.addEventListener('click', () => {
+        if (checked) return;
+        answers[i] = j;
+        renderQuestions();
+      });
+
+      options.appendChild(button);
+    });
+
+    box.appendChild(options);
+
+    if (checked) {
+      const feedback = document.createElement('div');
+      feedback.className = 'feedback';
+      feedback.textContent =
+        (answers[i] === item.answer
+          ? '✓ 答对了！ '
+          : '✗ 正确答案：' + item.options[item.answer] + '。 ') + item.why;
+      box.appendChild(feedback);
+    }
+
+    questionsRoot.appendChild(box);
+  });
+
+  updateProgress();
+}
+
+document.getElementById('checkBtn').addEventListener('click', () => {
+  if (checked) return;
+
+  if (Object.keys(answers).length !== questions.length) {
+    document.getElementById('scoreValue').textContent =
+      Object.keys(answers).length + '/40 已作答';
+    document.getElementById('scoreMessage').textContent =
+      '请先完成全部40题，再检查答案。';
+    document.getElementById('scoreBox').classList.add('show');
+    return;
+  }
+
+  checked = true;
+  const score = questions.reduce(
+    (total, item, i) => total + (answers[i] === item.answer ? 1 : 0), 0
+  );
+
+  document.getElementById('scoreValue').textContent = score + '/40';
+  document.getElementById('scoreMessage').textContent =
+    score >= 36 ? '优秀！你已经很好地掌握了乘法。'
+    : score >= 30 ? '做得不错！复习错题，再挑战一次。'
+    : score >= 24 ? '基础正在建立，建议重点练习乘法表和拆分计算。'
+    : '不要灰心！先复习课程，再慢慢练习。';
+
+  document.getElementById('scoreBox').classList.add('show');
+  document.getElementById('checkBtn').disabled = true;
+
+  saveRecord({
+    course: 'Multiplication',
+    score: score + '/40',
+    date: new Date().toLocaleDateString()
+  });
+
+  renderQuestions();
+  renderHistory();
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  Object.keys(answers).forEach(key => delete answers[key]);
+  checked = false;
+  document.getElementById('scoreBox').classList.remove('show');
+  document.getElementById('checkBtn').disabled = false;
+  renderQuestions();
+  document.getElementById('test').scrollIntoView({behavior:'smooth'});
+});
+
+renderQuestions();
+renderHistory();
 </script>
-<script src="../assets/js/progress.js"></script>
 </body>
 </html>
