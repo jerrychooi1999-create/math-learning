@@ -1,81 +1,420 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>平方 Squares</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>平方 Kuasa Dua | Interactive Math Lesson</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+:root {
+  --blue:#2357c6;
+  --pale:#edf3ff;
+  --green:#16865c;
+  --red:#c43d48;
+  --border:#dce5f2;
+}
+.lesson {max-width:1000px;margin:auto;padding:20px 16px 60px;color:#18243a}
+.hero-box {background:linear-gradient(135deg,#173f9c,#4b82ef);color:white;padding:32px 24px;border-radius:24px;margin-bottom:20px}
+.hero-box h1 {font-size:clamp(2rem,5vw,3rem);margin:8px 0}
+.hero-box p {margin:8px 0}
+.lesson-nav {display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 24px}
+.lesson-nav a {background:var(--pale);color:#214b9c;padding:9px 13px;border-radius:30px;text-decoration:none;font-weight:700;font-size:.9rem}
+.lesson-card {background:white;border:1px solid var(--border);border-radius:20px;padding:22px;margin:16px 0;box-shadow:0 5px 18px #243a6008}
+.lesson-card h2 {margin-top:0}
+.formula {font-size:clamp(1.5rem,4vw,2.2rem);font-weight:850;text-align:center;background:#edf3ff;padding:18px;border-radius:14px;margin:16px 0;color:#173f9c}
+.muted {color:#64728a}
+.pill {display:inline-block;background:#e1f6eb;color:#176442;border-radius:30px;padding:4px 10px;font-size:.8rem;font-weight:800}
+.steps {display:grid;gap:12px}
+.step {display:flex;gap:12px;align-items:flex-start;background:#f6f8fc;padding:14px;border-radius:12px}
+.step-num {width:30px;height:30px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:white;font-weight:800}
+.grid-demo {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;max-width:330px;margin:18px auto}
+.grid-demo span {aspect-ratio:1;background:#dbe7ff;border:1px solid #7396e7;border-radius:5px;display:grid;place-items:center;color:#173f9c;font-weight:800}
+.grid-demo span:nth-child(3n) {background:#b8ceff}
+.demo-label {text-align:center;font-weight:800}
+.two-col {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.example-box {background:#f5f8ff;border-left:4px solid var(--blue);padding:14px;border-radius:0 12px 12px 0;margin:12px 0}
+.warning-box {background:#fff5e9;border-left:4px solid #d98524;padding:14px;border-radius:0 12px 12px 0;margin:12px 0}
+.practice-options {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.practice-options button,.answer-option {padding:12px;border:1px solid #cbd6e8;border-radius:11px;background:white;text-align:left;cursor:pointer;color:#18243a;font:inherit}
+.practice-options button:hover,.answer-option:hover {border-color:var(--blue);background:#edf3ff}
+.practice-options button:disabled {cursor:default;opacity:1}
+.feedback {padding:12px;border-radius:10px;margin-top:12px;font-weight:700}
+.feedback.good {background:#e1f6eb;color:#176442}
+.feedback.bad {background:#fff0f0;color:#a72c38}
+.action-btn {border:0;border-radius:11px;padding:12px 18px;background:var(--blue);color:white;font:inherit;font-weight:800;cursor:pointer}
+.action-btn.secondary {background:#e8eef8;color:#203b70}
+.table-wrap {overflow-x:auto}
+.square-table {width:100%;border-collapse:collapse}
+.square-table th,.square-table td {border:1px solid var(--border);padding:10px;text-align:center}
+.square-table th {background:#edf3ff}
+.progress-track {height:9px;background:#e7edf6;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress-fill {height:100%;width:0;background:#2357c6;transition:width .2s}
+.quiz-question {border-top:1px solid var(--border);padding:18px 0}
+.quiz-question h3 {font-size:1rem}
+.quiz-options {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.answer-option.selected {background:#edf3ff;border-color:var(--blue)}
+.answer-option.correct {background:#e1f6eb;border-color:#16865c}
+.answer-option.wrong {background:#fff0f0;border-color:#c43d48}
+.quiz-result {display:none;background:#e1f6eb;border-radius:15px;padding:18px;margin:16px 0}
+.quiz-result.show {display:block}
+.quiz-result strong {font-size:2rem}
+@media(max-width:620px) {
+ .two-col {grid-template-columns:1fr}
+ .lesson-card {padding:16px}
+ .practice-options,.quiz-options {grid-template-columns:1fr}
+ .hero-box {padding:24px 18px}
+}
+</style>
 </head>
 <body>
-<header class="hero">
-  <h1>平方 Squares · Kuasa Dua</h1>
-  <p>理解概念，学习例题，再挑战40题。</p>
+<main class="lesson">
+
+<header class="hero-box">
+  <span class="pill">MATHEMATICS · LESSON 01</span>
+  <h1>平方 Kuasa Dua</h1>
+  <p>从零开始理解平方，不只是背答案。</p>
+  <p>Learn the meaning of squares, discover patterns, and practise step by step.</p>
+  <p>学习时间：约 25–40 分钟 · 难度：基础至进阶</p>
 </header>
-<main class="container">
-  <p><a href="../subjects/math.html">← 返回数学课程</a></p>
-  <article class="card">
-    <h2>什么是平方？</h2>
-    <p>平方就是一个数乘以它自己。 English: A square means multiplying a number by itself. Bahasa Melayu: Kuasa dua ialah nombor didarab dengan dirinya sendiri.</p>
-    <div class="formula">a² = a × a</div>
-    <p><b>例子：</b> 5² = 5 × 5 = 25。</p>
-    <p>注意：6² 不是 6 × 2，而是 6 × 6 = 36。</p>
-    <h3>平方数与正方形面积</h3>
-    <p>正方形面积 = 边长 × 边长。边长为4 cm，面积就是4 × 4 = 16 cm²。</p>
-    <div class="formula">正方形面积 = 边长²</div>
-    <p>常见平方数：1、4、9、16、25、36、49、64、81、100、121、144。</p>
-  </article>
-  <article class="card">
-    <h2>40题分级测验</h2>
-    <p class="muted">简单15题、中等10题、稍复杂10题、挑战题5题。每题1分。</p>
-    <div id="quizRoot"></div>
-  </article>
+
+<nav class="lesson-nav">
+  <a href="#concept">平方概念</a>
+  <a href="#visual">图形理解</a>
+  <a href="#patterns">平方规律</a>
+  <a href="#negative">负数平方</a>
+  <a href="#practice">互动练习</a>
+  <a href="#test">40题测验</a>
+</nav>
+
+<section class="lesson-card" id="concept">
+  <span class="pill">PART 1 · BASIC</span>
+  <h2>1. 什么是平方？</h2>
+  <p>平方就是把一个数乘以它自己。右上角的小数字 2 表示这个数要出现两次，作为相乘的因数。</p>
+  <div class="formula">a² = a × a</div>
+  <div class="two-col">
+    <div class="example-box">
+      <b>正确理解</b>
+      <div class="formula">5² = 5 × 5 = 25</div>
+      5 的平方等于 25。
+    </div>
+    <div class="warning-box">
+      <b>常见误解</b>
+      <div class="formula">5 × 2 = 10</div>
+      这叫做乘以 2，不是平方。
+    </div>
+  </div>
+  <h3>三个步骤学会计算</h3>
+  <div class="steps">
+    <div class="step"><span class="step-num">1</span><div><b>找到底数</b><br>例如 7²，底数是 7。</div></div>
+    <div class="step"><span class="step-num">2</span><div><b>把底数乘以自己</b><br>7² = 7 × 7。</div></div>
+    <div class="step"><span class="step-num">3</span><div><b>计算答案</b><br>7 × 7 = 49，所以 7² = 49。</div></div>
+  </div>
+</section>
+
+<section class="lesson-card" id="visual">
+  <span class="pill">PART 2 · VISUAL LEARNING</span>
+  <h2>2. 用正方形理解平方</h2>
+  <p>假设一个正方形每边有 5 个小格。横向 5 格，纵向 5 格，总共有多少格？</p>
+  <div class="grid-demo" aria-label="五行五列的25个方格">
+    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+    <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+    <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+    <span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+    <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+  </div>
+  <p class="demo-label">5 行 × 5 列 = 25 格</p>
+  <div class="formula">5² = 5 × 5 = 25</div>
+  <p>因此，正方形面积的计算方法是：</p>
+  <div class="formula">面积 = 边长 × 边长 = 边长²</div>
+  <div class="example-box">
+    <b>生活例题</b><br>
+    一个正方形花园的边长是 8 米。面积是多少？<br>
+    第一步：面积 = 8 × 8<br>
+    第二步：8² = 64<br>
+    <b>答案：64 平方米（m²）</b>
+  </div>
+  <p class="muted">注意：长度用米（m），面积用平方米（m²）。不要把两种单位混在一起。</p>
+</section>
+
+<section class="lesson-card" id="patterns">
+  <span class="pill">PART 3 · NUMBER PATTERNS</span>
+  <h2>3. 常见平方数与规律</h2>
+  <p>熟悉常见平方数，可以让你更快计算平方、平方根和较复杂的题目。</p>
+  <div class="table-wrap">
+    <table class="square-table">
+      <thead><tr><th>数字 n</th><th>平方 n²</th><th>计算过程</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>1</td><td>1 × 1</td></tr>
+        <tr><td>2</td><td>4</td><td>2 × 2</td></tr>
+        <tr><td>3</td><td>9</td><td>3 × 3</td></tr>
+        <tr><td>4</td><td>16</td><td>4 × 4</td></tr>
+        <tr><td>5</td><td>25</td><td>5 × 5</td></tr>
+        <tr><td>6</td><td>36</td><td>6 × 6</td></tr>
+        <tr><td>7</td><td>49</td><td>7 × 7</td></tr>
+        <tr><td>8</td><td>64</td><td>8 × 8</td></tr>
+        <tr><td>9</td><td>81</td><td>9 × 9</td></tr>
+        <tr><td>10</td><td>100</td><td>10 × 10</td></tr>
+        <tr><td>11</td><td>121</td><td>11 × 11</td></tr>
+        <tr><td>12</td><td>144</td><td>12 × 12</td></tr>
+        <tr><td>15</td><td>225</td><td>15 × 15</td></tr>
+        <tr><td>20</td><td>400</td><td>20 × 20</td></tr>
+        <tr><td>25</td><td>625</td><td>25 × 25</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>规律 A：奇数的平方还是奇数</h3>
+  <p>例如 3² = 9、5² = 25、7² = 49。</p>
+  <h3>规律 B：偶数的平方还是偶数</h3>
+  <p>例如 2² = 4、4² = 16、8² = 64。</p>
+  <h3>规律 C：连续平方数之间的差会增加</h3>
+  <div class="formula">1, 4, 9, 16, 25, 36</div>
+  <p>相邻数字的差是 3、5、7、9、11……也就是连续的奇数。</p>
+  <div class="example-box">
+    <b>进阶心算：15²</b><br>
+    15 × 15 = 225。<br>
+    对于以 5 结尾的两位数，可以用 35² = 3 × 4 后面接 25，得到 1225。<br>
+    <b>注意：</b>这个快捷方法适用于以 5 结尾的两位数，如 15、25、35、45。
+  </div>
+</section>
+
+<section class="lesson-card" id="negative">
+  <span class="pill">PART 4 · INTERMEDIATE</span>
+  <h2>4. 负数的平方与括号</h2>
+  <p>当题目出现负数时，必须注意括号，因为括号会改变参与平方的内容。</p>
+  <div class="two-col">
+    <div class="example-box">
+      <b>有括号</b>
+      <div class="formula">(-3)² = 9</div>
+      先算负三乘以负三。负数乘负数等于正数。
+    </div>
+    <div class="warning-box">
+      <b>没有括号</b>
+      <div class="formula">-3² = -9</div>
+      按运算顺序先计算 3²，再加上前面的负号。
+    </div>
+  </div>
+  <h3>运算顺序例题</h3>
+  <div class="step"><span class="step-num">1</span><div>题目：2 + 3² × 2</div></div>
+  <div class="step"><span class="step-num">2</span><div>先算平方：2 + 9 × 2</div></div>
+  <div class="step"><span class="step-num">3</span><div>再算乘法：2 + 18</div></div>
+  <div class="step"><span class="step-num">4</span><div><b>最后答案：20</b></div></div>
+  <p class="muted">运算顺序一般是括号、指数、乘除、加减。相同优先级的乘除或加减按从左到右处理。</p>
+</section>
+
+<section class="lesson-card" id="practice">
+  <span class="pill">PART 5 · INTERACTIVE PRACTICE</span>
+  <h2>5. 互动练习：马上检查理解</h2>
+  <p>选择答案后，会立即显示结果与解释。</p>
+  <div id="practiceArea"></div>
+  <button class="action-btn secondary" id="practiceReset" type="button">重新练习</button>
+</section>
+
+<section class="lesson-card" id="test">
+  <span class="pill">FINAL TEST · 40 QUESTIONS</span>
+  <h2>6. 平方与平方根：40 题分级测验</h2>
+  <p>简单 15 题、中等 10 题、稍复杂 10 题、挑战题 5 题。每题 1 分。完成后显示正确答案和解释。</p>
+  <p class="muted">建议先完成课文和互动练习，再开始正式测验。</p>
+  <div><b id="answered">0 / 40 已作答</b></div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div id="quizArea"></div>
+  <div class="quiz-result" id="result">
+    <strong id="score">0/40</strong>
+    <p id="scoreMessage"></p>
+  </div>
+  <button class="action-btn" id="submitQuiz" type="button">检查答案</button>
+  <button class="action-btn secondary" id="resetQuiz" type="button">重新测验</button>
+</section>
+
+<p><a href="../index.html">← 返回学习首页</a></p>
 </main>
-<footer>My Learning Hub</footer>
+
 <script>
-window.lessonTitle = "平方 Squares";
-window.lessonQuiz = [
-["简单","2² 等于多少？",["2","4","6","8"],1,"2 × 2 = 4。"],
-["简单","3² 等于多少？",["6","9","12","3"],1,"3 × 3 = 9。"],
-["简单","4² 等于多少？",["8","12","16","20"],2,"4 × 4 = 16。"],
-["简单","5² 等于多少？",["10","20","25","30"],2,"5 × 5 = 25。"],
-["简单","6² 等于多少？",["12","30","36","42"],2,"6 × 6 = 36。"],
-["简单","7² 等于多少？",["14","42","49","77"],2,"7 × 7 = 49。"],
-["简单","8² 等于多少？",["16","48","56","64"],3,"8 × 8 = 64。"],
-["简单","9² 等于多少？",["18","72","81","99"],2,"9 × 9 = 81。"],
-["简单","10² 等于多少？",["20","100","1000","10"],1,"10 × 10 = 100。"],
-["简单","11² 等于多少？",["22","111","121","131"],2,"11 × 11 = 121。"],
-["简单","12² 等于多少？",["24","124","144","132"],2,"12 × 12 = 144。"],
-["简单","平方表示什么？",["加2","乘以自己","乘以2","除以2"],1,"a² 表示 a × a。"],
-["简单","哪个是完全平方数？",["12","18","25","30"],2,"25 = 5²。"],
-["简单","正方形边长为3 cm，面积是多少？",["6 cm²","9 cm²","12 cm²","9 cm"],1,"面积 = 3 × 3 = 9 cm²。"],
-["简单","2² + 3² 等于多少？",["10","12","13","25"],2,"4 + 9 = 13。"],
-["中等","√ 不出现在下面哪一个表达式中：哪个等于 13²？",["13 × 2","13 × 13","13 + 13","13 + 2"],1,"13² 就是 13 × 13。"],
-["中等","15² 等于多少？",["30","125","225","250"],2,"15 × 15 = 225。"],
-["中等","20² 等于多少？",["40","200","400","2000"],2,"20 × 20 = 400。"],
-["中等","6² + 4² 等于多少？",["40","48","52","100"],2,"36 + 16 = 52。"],
-["中等","10² − 7² 等于多少？",["21","49","51","70"],2,"100 − 49 = 51。"],
-["中等","a = 8，a² 等于多少？",["16","32","64","88"],2,"8 × 8 = 64。"],
-["中等","哪个数的平方是169？",["11","12","13","14"],2,"13 × 13 = 169。"],
-["中等","正方形边长为6 cm，面积是多少？",["12 cm²","24 cm²","36 cm²","36 cm"],2,"面积为36 cm²。"],
-["中等","以下哪个不是整数的平方？",["16","25","30","36"],2,"30不是整数的平方。"],
-["中等","3² × 4² 等于多少？",["49","72","144","576"],2,"9 × 16 = 144。"],
-["稍复杂","(5 + 2)² 等于多少？",["29","49","25","14"],1,"先算括号：7² = 49。"],
-["稍复杂","5² + 9² 等于多少？",["81","100","106","126"],2,"25 + 81 = 106。"],
-["稍复杂","√81 + 5² 等于多少？",["30","34","36","81"],1,"9 + 25 = 34。"],
-["稍复杂","正方形面积为64 cm²，边长是多少？",["8 cm","16 cm","32 cm","8 cm²"],0,"边长 = √64 = 8 cm。"],
-["稍复杂","√(6²) 等于多少？",["6","12","36","3"],0,"√36 = 6。"],
-["稍复杂","14² 等于多少？",["186","196","204","216"],1,"14 × 14 = 196。"],
-["稍复杂","边长从3 m增加到5 m，面积增加多少？",["2 m²","9 m²","16 m²","25 m²"],2,"25 − 9 = 16 m²。"],
-["稍复杂","x² = 49，且 x 是正数，x 等于多少？",["−7","7","49","24.5"],1,"正数7的平方是49。"],
-["稍复杂","2² + 3² + 4² 等于多少？",["25","29","36","81"],1,"4 + 9 + 16 = 29。"],
-["稍复杂","一个正方形边长为9 cm，面积是多少？",["18 cm²","36 cm²","81 cm²","81 cm"],2,"9 × 9 = 81 cm²。"],
-["挑战","正方形面积为196 cm²，周长是多少？",["14 cm","28 cm","56 cm","196 cm"],2,"边长14 cm，周长4 × 14 = 56 cm。"],
-["挑战","边长分别为6 cm和8 cm的两个正方形，面积总和是多少？",["14 cm²","48 cm²","100 cm²","196 cm²"],2,"36 + 64 = 100 cm²。"],
-["挑战","一个正数的平方是2025，这个数是多少？",["25","35","45","55"],2,"45 × 45 = 2025。"],
-["挑战","正方形边长为x，增加2后面积如何表示？",["x² + 2","(x + 2)²","x² + 4","2x²"],1,"新边长为 x + 2，所以面积是 (x + 2)²。"],
-["挑战","20² 比 2² 大多少倍？",["10倍","100倍","20倍","相同"],1,"400 ÷ 4 = 100。"]
+const practiceQuestions = [
+  {q:"1. 4² 等于多少？",o:["8","12","16","20"],a:2,w:"4² = 4 × 4 = 16。"},
+  {q:"2. 6² 的意思是什么？",o:["6 × 2","6 + 2","6 × 6","6 + 6"],a:2,w:"平方表示底数乘以它自己。"},
+  {q:"3. 正方形边长为 9 cm，面积是多少？",o:["18 cm²","81 cm²","36 cm²","81 cm"],a:1,w:"面积 = 9 × 9 = 81 cm²。"},
+  {q:"4. (-4)² 等于多少？",o:["-16","8","16","-8"],a:2,w:"(-4) × (-4) = 16。"},
+  {q:"5. -4² 等于多少？",o:["16","-16","8","-8"],a:1,w:"没有括号时，先计算 4²，再应用负号，因此答案是 -16。"}
 ];
+const practiceArea = document.getElementById("practiceArea");
+function renderPractice(){
+  practiceArea.innerHTML="";
+  practiceQuestions.forEach((q,i)=>{
+    const box=document.createElement("div");
+    box.className="quiz-question";
+    const h=document.createElement("h3");
+    h.textContent=q.q;
+    box.appendChild(h);
+    const opts=document.createElement("div");
+    opts.className="practice-options";
+    const feedback=document.createElement("div");
+    feedback.className="feedback";
+    feedback.hidden=true;
+    q.o.forEach((option,j)=>{
+      const b=document.createElement("button");
+      b.type="button";
+      b.textContent=String.fromCharCode(65+j)+". "+option;
+      b.addEventListener("click",()=>{
+        if(opts.dataset.done==="yes") return;
+        opts.dataset.done="yes";
+        opts.querySelectorAll("button").forEach((button,k)=>{
+          button.disabled=true;
+          if(k===q.a) button.style.borderColor="#16865c";
+          if(k===j&&j!==q.a) button.style.borderColor="#c43d48";
+        });
+        feedback.hidden=false;
+        feedback.className="feedback "+(j===q.a?"good":"bad");
+        feedback.textContent=(j===q.a?"答对了！ ":"还不正确。 ")+q.w;
+      });
+      opts.appendChild(b);
+    });
+    box.appendChild(opts);
+    box.appendChild(feedback);
+    practiceArea.appendChild(box);
+  });
+}
+document.getElementById("practiceReset").addEventListener("click",renderPractice);
+renderPractice();
+
+const questions = [
+{l:"简单",q:"1. 2² = ?",o:["2","4","6","8"],a:1,w:"2 × 2 = 4。"},
+{l:"简单",q:"2. 3² = ?",o:["6","9","12","3"],a:1,w:"3 × 3 = 9。"},
+{l:"简单",q:"3. 4² = ?",o:["8","12","16","20"],a:2,w:"4 × 4 = 16。"},
+{l:"简单",q:"4. 5² = ?",o:["10","20","25","30"],a:2,w:"5 × 5 = 25。"},
+{l:"简单",q:"5. 6² = ?",o:["12","30","36","42"],a:2,w:"6 × 6 = 36。"},
+{l:"简单",q:"6. 7² = ?",o:["14","42","49","77"],a:2,w:"7 × 7 = 49。"},
+{l:"简单",q:"7. 8² = ?",o:["16","48","56","64"],a:3,w:"8 × 8 = 64。"},
+{l:"简单",q:"8. 9² = ?",o:["18","72","81","99"],a:2,w:"9 × 9 = 81。"},
+{l:"简单",q:"9. 10² = ?",o:["20","100","1000","10"],a:1,w:"10 × 10 = 100。"},
+{l:"简单",q:"10. √16 = ?",o:["4","8","2","6"],a:0,w:"4 × 4 = 16。"},
+{l:"简单",q:"11. √25 = ?",o:["3","4","5","6"],a:2,w:"5 × 5 = 25。"},
+{l:"简单",q:"12. √49 = ?",o:["6","7","8","9"],a:1,w:"7 × 7 = 49。"},
+{l:"简单",q:"13. √64 = ?",o:["6","7","8","9"],a:2,w:"8 × 8 = 64。"},
+{l:"简单",q:"14. √81 = ?",o:["8","9","18","27"],a:1,w:"9 × 9 = 81。"},
+{l:"简单",q:"15. 平方表示什么？",o:["这个数加2","这个数乘以自己","这个数乘以2","这个数除以2"],a:1,w:"a² = a × a。"},
+{l:"中等",q:"16. 11² = ?",o:["22","111","121","131"],a:2,w:"11 × 11 = 121。"},
+{l:"中等",q:"17. 12² = ?",o:["24","124","144","132"],a:2,w:"12 × 12 = 144。"},
+{l:"中等",q:"18. √100 = ?",o:["5","10","20","50"],a:1,w:"10 × 10 = 100。"},
+{l:"中等",q:"19. √121 = ?",o:["11","12","10","21"],a:0,w:"11 × 11 = 121。"},
+{l:"中等",q:"20. 哪个数的平方是144？",o:["10","11","12","14"],a:2,w:"12² = 144。"},
+{l:"中等",q:"21. 6² + 4² = ?",o:["40","48","52","100"],a:2,w:"36 + 16 = 52。"},
+{l:"中等",q:"22. 10² − 7² = ?",o:["21","49","51","70"],a:2,w:"100 − 49 = 51。"},
+{l:"中等",q:"23. 如果 a = 8，a² = ?",o:["16","32","64","88"],a:2,w:"8 × 8 = 64。"},
+{l:"中等",q:"24. 正方形边长6 cm，面积是多少？",o:["12 cm²","24 cm²","36 cm²","36 cm"],a:2,w:"6 × 6 = 36 cm²。"},
+{l:"中等",q:"25. 哪个不是完全平方数？",o:["16","25","30","36"],a:2,w:"16、25、36是整数平方；30不是。"},
+{l:"稍复杂",q:"26. 3² × 4² = ?",o:["49","72","144","576"],a:2,w:"9 × 16 = 144。"},
+{l:"稍复杂",q:"27. (5 + 2)² = ?",o:["29","49","25","14"],a:1,w:"先算括号得到7，再算7² = 49。"},
+{l:"稍复杂",q:"28. 5² + √81 = ?",o:["25","30","34","81"],a:2,w:"25 + 9 = 34。"},
+{l:"稍复杂",q:"29. 正方形面积64 cm²，边长是多少？",o:["8 cm","16 cm","32 cm","8 cm²"],a:0,w:"√64 = 8 cm。"},
+{l:"稍复杂",q:"30. 哪个表达式等于9²？",o:["9 × 2","9 + 9","9 × 9","9 × 9 × 9"],a:2,w:"9² = 9 × 9。"},
+{l:"稍复杂",q:"31. √(6²) = ?",o:["6","12","36","3"],a:0,w:"√36 = 6。"},
+{l:"稍复杂",q:"32. 15² = ?",o:["30","125","225","250"],a:2,w:"15 × 15 = 225。"},
+{l:"稍复杂",q:"33. 正方形边长从3 m增至5 m，面积增加多少？",o:["2 m²","9 m²","16 m²","25 m²"],a:2,w:"新面积25，原面积9，增加16 m²。"},
+{l:"稍复杂",q:"34. 若 x² = 49 且 x 为正数，x = ?",o:["-7","7","49","24.5"],a:1,w:"题目限定正数，因此x = 7。"},
+{l:"稍复杂",q:"35. 2² + 3² + 4² = ?",o:["25","29","36","81"],a:1,w:"4 + 9 + 16 = 29。"},
+{l:"挑战题",q:"36. 正方形面积196 cm²，周长是多少？",o:["14 cm","28 cm","56 cm","196 cm"],a:2,w:"边长√196 = 14，周长4 × 14 = 56 cm。"},
+{l:"挑战题",q:"37. 边长6 cm与8 cm的两个正方形，面积总和是多少？",o:["14 cm²","48 cm²","100 cm²","196 cm²"],a:2,w:"36 + 64 = 100 cm²。"},
+{l:"挑战题",q:"38. 一个正数的平方是2025，这个数是多少？",o:["25","35","45","55"],a:2,w:"45 × 45 = 2025。"},
+{l:"挑战题",q:"39. 正方形边长x，增加2后面积是什么？",o:["x² + 2","(x + 2)²","x² + 4","2x²"],a:1,w:"新边长是x + 2，面积为(x + 2)²。"},
+{l:"挑战题",q:"40. 20²比2²大多少倍？",o:["10倍","100倍","20倍","相同"],a:1,w:"400 ÷ 4 = 100，所以是100倍。"}
+];
+
+const quizArea=document.getElementById("quizArea");
+let answers={};
+let checked=false;
+
+function renderQuiz(){
+  quizArea.innerHTML="";
+  questions.forEach((q,i)=>{
+    const box=document.createElement("div");
+    box.className="quiz-question";
+    const h=document.createElement("h3");
+    h.textContent="["+q.l+"] "+q.q;
+    box.appendChild(h);
+    const opts=document.createElement("div");
+    opts.className="quiz-options";
+    q.o.forEach((option,j)=>{
+      const b=document.createElement("button");
+      b.type="button";
+      b.className="answer-option";
+      b.textContent=String.fromCharCode(65+j)+". "+option;
+      b.addEventListener("click",()=>{
+        if(checked)return;
+        answers[i]=j;
+        opts.querySelectorAll("button").forEach(x=>x.classList.remove("selected"));
+        b.classList.add("selected");
+        updateProgress();
+      });
+      opts.appendChild(b);
+    });
+    box.appendChild(opts);
+    const feedback=document.createElement("div");
+    feedback.className="feedback";
+    feedback.hidden=true;
+    feedback.id="feedback-"+i;
+    box.appendChild(feedback);
+    quizArea.appendChild(box);
+  });
+  updateProgress();
+}
+function updateProgress(){
+  const n=Object.keys(answers).length;
+  document.getElementById("answered").textContent=n+" / 40 已作答";
+  document.getElementById("progressFill").style.width=(n/40*100)+"%";
+}
+document.getElementById("submitQuiz").addEventListener("click",()=>{
+  if(checked)return;
+  if(Object.keys(answers).length!==40){
+    alert("请先完成全部40题。当前已回答 "+Object.keys(answers).length+" 题。");
+    return;
+  }
+  checked=true;
+  let score=0;
+  questions.forEach((q,i)=>{
+    const box=quizArea.children[i];
+    const buttons=box.querySelectorAll(".answer-option");
+    buttons.forEach((b,j)=>{
+      if(j===q.a)b.classList.add("correct");
+      if(j===answers[i]&&j!==q.a)b.classList.add("wrong");
+    });
+    const f=document.getElementById("feedback-"+i);
+    f.hidden=false;
+    f.className="feedback "+(answers[i]===q.a?"good":"bad");
+    f.textContent=(answers[i]===q.a?"✓ 答对了！ ":"✗ 正确答案："+q.o[q.a]+"。 ")+q.w;
+    if(answers[i]===q.a)score++;
+  });
+  document.getElementById("score").textContent=score+"/40";
+  document.getElementById("scoreMessage").textContent=
+    score>=36?"优秀！你已经掌握了大部分平方概念。":
+    score>=30?"做得不错！请复习错误的题目。":
+    score>=24?"继续努力，建议重新学习规律与例题。":
+    "建议先复习课程，再重新挑战。";
+  document.getElementById("result").classList.add("show");
+  document.getElementById("submitQuiz").disabled=true;
+  saveProgress(score);
+});
+function saveProgress(score){
+  const key="myLearningHubProgressV1";
+  try{
+    const records=JSON.parse(localStorage.getItem(key)||"[]");
+    records.push({
+      course:"Mathematics: Squares and Square Roots",
+      score:score,
+      date:new Date().toLocaleDateString()
+    });
+    localStorage.setItem(key,JSON.stringify(records.slice(-100)));
+  }catch(e){
+    console.warn("Progress could not be saved.",e);
+  }
+}
+document.getElementById("resetQuiz").addEventListener("click",()=>{
+  answers={};
+  checked=false;
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("submitQuiz").disabled=false;
+  renderQuiz();
+});
+renderQuiz();
 </script>
-<script src="../assets/js/progress.js"></script>
 </body>
 </html>
