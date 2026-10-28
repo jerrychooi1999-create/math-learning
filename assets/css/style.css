@@ -1,0 +1,121 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7fc;
+  color: #172033;
+  line-height: 1.6;
+}
+
+header {
+  background: #2357c6;
+  color: white;
+  padding: 28px 20px;
+}
+
+header, main, footer {
+  padding-left: max(20px, calc((100% - 960px) / 2));
+  padding-right: max(20px, calc((100% - 960px) / 2));
+}
+
+main {
+  padding-top: 24px;
+  padding-bottom: 48px;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e0e7f2;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+button, .button {
+  display: inline-block;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 16px;
+  background: #2357c6;
+  color: white;
+  font: inherit;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.secondary {
+  background: #e7edf8;
+  color: #172033;
+}
+
+.formula {
+  padding: 18px;
+  background: #edf3ff;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.note {
+  color: #536078;
+  font-size: .92rem;
+}
+
+.progress-track {
+  background: #e1e8f3;
+  height: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #2357c6;
+  width: 0;
+}
+
+.question {
+  border-top: 1px solid #e0e7f2;
+  padding: 16px 0;
+}
+
+.option {
+  margin: 4px;
+  background: #e7edf8;
+  color: #172033;
+}
+
+.option.selected {
+  outline: 2px solid #2357c6;
+}
+
+footer {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  color: #536078;
+}
+
+@media (max-width: 650px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 16px;
+  }
+}
