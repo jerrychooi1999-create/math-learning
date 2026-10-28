@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>数学课程目录</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header>
+  <h1>数学 Mathematics</h1>
+  <p>Matematik · 按章节学习</p>
+  <a class="button secondary" href="../index.html">
+    ← 返回首页
+  </a>
+</header>
+
+<main>
+  <section class="card">
+    <h2>选择年级或难度</h2>
+
+    <label for="level">学习级别：</label>
+    <select id="level">
+      <option value="all">全部级别</option>
+      <option value="basic">基础 Basic</option>
+      <option value="intermediate">中级 Intermediate</option>
+      <option value="advanced">进阶 Advanced</option>
+    </select>
+  </section>
+
+  <section class="grid" id="courseList">
+    <article class="card" data-level="basic">
+      <h3>乘法 Multiplication</h3>
+      <p>乘法表、心算与应用题。</p>
+      <p class="note">级别：基础 Basic</p>
+      <a class="button" href="../lessons/multiplication.html">
+        开始学习
+      </a>
+    </article>
+
+    <article class="card" data-level="basic">
+      <h3>除法 Division</h3>
+      <p>平均分配、余数与应用题。</p>
+      <p class="note">级别：基础 Basic</p>
+      <a class="button" href="../lessons/division.html">
+        开始学习
+      </a>
+    </article>
+
+    <article class="card" data-level="basic">
+      <h3>Kuasa Dua 平方</h3>
+      <p>学习一个数乘以自己。</p>
+      <p class="note">级别：基础 Basic</p>
+      <a class="button" href="../lessons/square.html">
+        开始学习
+      </a>
+    </article>
+
+    <article class="card" data-level="basic">
+      <h3>Punca Kuasa Dua 平方根</h3>
+      <p>从平方数反向找出平方根。</p>
+      <p class="note">级别：基础 Basic</p>
+      <a class="button" href="../lessons/square-root.html">
+        开始学习
+      </a>
+    </article>
+
+    <article class="card" data-level="intermediate">
+      <h3>分数 Fractions</h3>
+      <p>认识分子、分母和分数运算。</p>
+      <p class="note">级别：中级 Intermediate</p>
+      <a class="button" href="../lessons/fractions.html">
+        开始学习
+      </a>
+    </article>
+  </section>
+</main>
+
+<script>
+  const level = document.getElementById("level");
+
+  level.addEventListener("change", () => {
+    document.querySelectorAll("#courseList [data-level]")
+      .forEach(card => {
+        card.hidden =
+          level.value !== "all" &&
+          card.dataset.level !== level.value;
+      });
+  });
+</script>
+
+</body>
+</html>
